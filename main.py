@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -193,17 +192,9 @@ def get_page_content(url):
         driver.quit()
 
 
-def parse_html(html):
-    # Use BeautifulSoup to parse HTML and extract information
-    pass
-
 def main():
     url = 'https://odyssey.uwaterloo.ca/grad/'
     page_content = get_page_content(url)
-    #print (page_content)
-    #data = parse_html(page_content)
-    # Further processing and storing data
 
 if __name__ == "__main__":
     main()
-
