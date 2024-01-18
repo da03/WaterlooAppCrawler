@@ -1,5 +1,7 @@
 # WaterlooAppCrawler
 
+Crawl graduate applications in the Odyssey system and save to a local CSV file. To customize the information to be crawled, change the `extract_details` function.
+
 ## Dependencies
 
 * firefox browser
@@ -20,6 +22,6 @@ Next, run
 python main.py
 ```
 
-Note that running this script will send a push request to Duo Mobile, and you will need to use Duo Mobile to approve the login request.
+Note that running this script will send a push request to Duo Mobile, and you will need to use Duo Mobile to **approve** the login request.
 
 After running this script, the results will be saved in a CSV file named `applications_data.csv`.
