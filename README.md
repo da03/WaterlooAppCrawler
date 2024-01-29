@@ -4,7 +4,7 @@ Crawl graduate applications in the Odyssey system and save to a local CSV file. 
 
 ## Dependencies
 
-* firefox browser
+* Firefox browser
 * `pip install selenium`
 
 ## Usage
