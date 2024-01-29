@@ -11,7 +11,8 @@ import csv
 from selenium.common.exceptions import NoSuchElementException
 
 
-def get_page_content(url):
+def main():
+    url = 'https://odyssey.uwaterloo.ca/grad/'
     firefox_options = webdriver.FirefoxOptions()
     # firefox_options.add_argument('-headless')  # Uncomment for headless mode
     # Initialize Firefox WebDriver
@@ -58,10 +59,6 @@ def get_page_content(url):
         time.sleep(1)
         list_applications_link.click()
 
-        #dropdown = WebDriverWait(driver, 10).until(
-        #    EC.visibility_of_element_located((By.NAME, "plans"))
-        #)
-
 
         # Function to process applications for a given plan
         def process_applications(plan):
@@ -80,7 +77,6 @@ def get_page_content(url):
             search_button.click()
         
             # Wait for results to load
-            #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "tbody")))
             time.sleep(20)
         
             # Collect all application links
@@ -100,32 +96,6 @@ def get_page_content(url):
                 )
                 h1_text, subplans, supervisor = extract_details()
                 writer.writerow([href, plan, subplans, supervisor, h1_text])
-        ###select = Select(dropdown)
-        
-        #### Select the option by its value
-        ###select.select_by_value("CSD")
-        ###
-        #### Wait for the "Search" button to be clickable and then click it
-        ###search_button = WebDriverWait(driver, 10).until(
-        ###    EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn.btn-input[type='submit']"))
-        ###)
-        ###time.sleep(1)
-        ###search_button.click()
-        ###time.sleep(10)
-        ####wait = WebDriverWait(driver, 10)
-        ####wait.until(lambda d: d.execute_script('return document.readyState') == 'complete')
-        ###WebDriverWait(driver, 10).until(
-        ###    EC.presence_of_element_located((By.TAG_NAME, "tbody"))
-        ###)
-        ###
-        #### Find all anchor tags within the table
-        ###application_links = driver.find_elements(By.XPATH, "//tbody//a[contains(@href, '../view/')]")
-        ###
-        #### Extract the href attribute from each link
-        ###link_urls = [link.get_attribute('href') for link in application_links]
-        ###
-        #### Now you have all the application links
-        ###print(link_urls)
 
         # Function to extract Subplans and Requested Supervisor
         def extract_details():
@@ -148,6 +118,8 @@ def get_page_content(url):
                 supervisor = ""
         
             return h1_text, subplans, supervisor
+
+
         with open('applications_data.csv', 'w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(['Link', 'Plan', 'Subplans', 'Supervisor', 'Name'])
@@ -157,42 +129,12 @@ def get_page_content(url):
             # Navigate back to the search page to process CSM applications
             driver.get("https://odyssey.uwaterloo.ca/grad/list/")
             process_applications("CSM") 
-        #### Open a CSV file to write the data
-        ###with open('applications_data.csv', 'w', newline='', encoding='utf-8') as file:
-        ###    writer = csv.writer(file)
-        ###    # Writing the header
-        ###    writer.writerow(['Link', 'Subplans', 'Supervisor'])
-        ###
-        ###    # Find all application links and iterate through them
-        ###    application_links = driver.find_elements(By.XPATH, "//tbody//a[contains(@href, '../view/')]")
-        ###    link_urls = [link.get_attribute('href') for link in application_links]
-        ###    for href in link_urls:
-        ###        #href = link.get_attribute('href')
-        ###        # Open each link
-        ###        driver.get(href)
-        ###
-        ###        # Wait for the specific elements to be loaded
-        ###        WebDriverWait(driver, 20).until(
-        ###            EC.presence_of_element_located((By.XPATH, "//th[contains(text(), 'Subplans:')]"))
-        ###        )
-        ###
-        ###        # Extract the required details
-        ###        subplans, supervisor = extract_details()
-        ###
-        ###        # Write the data to the CSV file
-        ###        writer.writerow([href, subplans, supervisor])
-
-        return content
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
         # Closing the browser
         driver.quit()
 
-
-def main():
-    url = 'https://odyssey.uwaterloo.ca/grad/'
-    page_content = get_page_content(url)
 
 if __name__ == "__main__":
     main()
